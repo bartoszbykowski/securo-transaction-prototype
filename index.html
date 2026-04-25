@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Securo - kreator warunków transakcji</title>
+  <style>
+    :root {
+      --page-bg: #f3f4f6;
+      --surface-bg: #ffffff;
+      --surface-muted: #f8fafc;
+      --text-color: #18212b;
+      --muted-text: #5b6776;
+      --border-color: #d7dce3;
+      --button-bg: #eef2f6;
+      --button-active-bg: #18212b;
+      --button-active-text: #ffffff;
+      --error-color: #b42318;
+      --accent-border: #b8c2cf;
+      --focus-ring: rgba(24, 33, 43, 0.16);
+      --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 24px rgba(16, 24, 40, 0.06);
+      --radius-md: 10px;
+      --radius-sm: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page-bg: #111315;
+        --surface-bg: #181b1f;
+        --surface-muted: #1f242b;
+        --text-color: #f3f4f6;
+        --muted-text: #c7cbd1;
+        --border-color: #444b55;
+        --button-bg: #242a31;
+        --button-active-bg: #f3f4f6;
+        --button-active-text: #111315;
+        --error-color: #ff8e8e;
+        --accent-border: #596372;
+        --focus-ring: rgba(243, 244, 246, 0.14);
+        --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.26), 0 12px 28px rgba(0, 0, 0, 0.32);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--page-bg);
+      color: var(--text-color);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    fieldset,
+    header,
+    .sticky-bar,
+    #summaryContent section,
+    #formErrors {
+      background: var(--surface-bg);
+    }
+
+    header {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 28px 56px;
+    }
+
+    h1,
+    h2,
+    h3,
+    legend {
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted-text);
+    }
+
+    fieldset {
+      margin: 0 0 18px;
+      padding: 18px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    legend {
+      padding: 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    label > span {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      color: var(--text-color);
+      background: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      transition: border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 12px;
+    }
+
+    input[readonly] {
+      background: var(--surface-muted);
+      color: var(--muted-text);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus {
+      outline: none;
+      border-color: var(--accent-border);
+      box-shadow: 0 0 0 4px var(--focus-ring);
+    }
+
+    table,
+    td,
+    th {
+      border-color: var(--border-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface-bg);
+    }
+
+    td,
+    th {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    small,
+    output {
+      color: var(--muted-text);
+    }
+
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 14px 0 10px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+    }
+
+    .wizard-nav-button {
+      background: var(--button-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      min-height: 40px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .wizard-nav-button.is-active {
+      background: var(--button-active-bg);
+      color: var(--button-active-text);
+      border-color: var(--button-active-bg);
+    }
+
+    .checkbox-group {
+      margin: 4px 0 14px;
+      padding: 12px 14px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+    }
+
+    .checkbox-group > span {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px;
+      color: var(--text-color);
+    }
+
+    .checkbox-group input[type="checkbox"],
+    .checkbox-group input[type="radio"] {
+      width: 16px;
+      min-height: 16px;
+      margin: 0;
+      padding: 0;
+      flex: 0 0 auto;
+    }
+
+    .conditional {
+      margin: 8px 0 14px;
+      padding-left: 12px;
+      border-left: 3px solid var(--accent-border);
+    }
+
+    .wizard-step > p {
+      max-width: 760px;
+      margin-bottom: 18px;
+    }
+
+    #wizardStatus {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+    }
+
+    #wizardSteps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    #formErrors {
+      margin-bottom: 16px;
+      padding-top: 12px;
+      color: var(--error-color);
+    }
+
+    #summaryContent section {
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    #summaryContent h3 {
+      margin-top: 0;
+    }
+
+    #prepaymentValidationMessage {
+      margin: 4px 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error-text,
+    #formErrors,
+    #prepaymentValidationMessage {
+      color: var(--error-color);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Securo</h1>
+    <p style="max-width: 900px;">
+      Prototyp formularza do ustalenia warunków transakcji nieruchomości. Układ jest krokowy:
+      najpierw strony, potem nieruchomość, umowy, kredytowanie i na końcu podsumowanie.
+    </p>
+  </header>
+
+  <main>
+    <form id="transactionForm" novalidate>
+      <div class="sticky-bar">
+        <div id="wizardStatus">Kreator transakcji</div>
+        <div id="wizardSteps"></div>
+      </div>
+
+      <div id="formErrors" aria-live="polite" hidden></div>
+
+      <section class="wizard-step" data-step="1">
+        <h2>1. Strony i uczestnicy procesu</h2>
+        <p>Najpierw ustalasz strony główne i osoby wspierające proces. To są dane organizacyjne, nie warunki płatności.</p>
+
+        <fieldset>
+          <legend>Sprzedający</legend>
+          <label>
+            <span>Typ sprzedającego</span>
+            <select name="sellerType" data-required="true">
+              <option value="">Wybierz</option>
+              <option value="osoba fizyczna" selected>osoba fizyczna</option>
+              <option value="firma">firma</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+
+          <div class="conditional" data-show-when="sellerType:osoba fizyczna">
+            <label>
+              <span>Imię</span>
+              <input type="text" name="sellerFirstName" value="Jan" placeholder="Imię sprzedającego" data-required="true">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Nazwisko</span>
+              <input type="text" name="sellerLastName" value="Kowalski" placeholder="Nazwisko sprzedającego" data-required="true">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Numer dowodu osobistego</span>
+              <input type="text" name="sellerDocumentNumber" value="AWA123456" placeholder="Np. AWA123456">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <div class="conditional" data-show-when="sellerType:firma" hidden>
+            <label>
+              <span>Nazwa firmy</span>
+              <input type="text" name="sellerCompanyName" placeholder="Nazwa firmy">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>KRS</span>
+              <input type="text" name="sellerCompanyKrs" placeholder="Numer KRS">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>NIP</span>
+              <input type="text" name="sellerCompanyNip" placeholder="Numer NIP">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Osoba reprezentująca</span>
+              <input type="text" name="sellerCompanyRepresentative" placeholder="Imię i nazwisko reprezentanta">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <label>
+            <span>Adres</span>
+            <input type="text" name="sellerAddress" value="ul. Lipowa 10/5, 00-100 Warszawa" placeholder="Pełny adres" data-required="true">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input type="email" name="sellerEmail" value="jan.kowalski@example.pl" placeholder="adres@przyklad.pl">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Telefon</span>
+            <input type="tel" name="sellerPhone" value="500600700" placeholder="Telefon">
+            <small class="error-text"></small>
+          </label>
+          <fieldset>
+            <legend>Rachunek do płatności sprzedającego</legend>
+            <label>
+              <span>Numer rachunku</span>
+              <input type="text" name="sellerPaymentAccount" value="11 2222 3333 4444 5555 6666 7777" placeholder="Numer rachunku">
+              <small class="error-text"></small>
+            </label>
+          </fieldset>
+        </fieldset>
+
+        <fieldset>
+          <legend>Kupujący</legend>
+          <label>
+            <span>Typ kupującego</span>
+            <select name="buyerType" data-required="true">
+              <option value="">Wybierz</option>
+              <option value="osoba fizyczna" selected>osoba fizyczna</option>
+              <option value="firma">firma</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+
+          <div class="conditional" data-show-when="buyerType:osoba fizyczna">
+            <label>
+              <span>Imię</span>
+              <input type="text" name="buyerFirstName" value="Anna" placeholder="Imię kupującego" data-required="true">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Nazwisko</span>
+              <input type="text" name="buyerLastName" value="Nowak" placeholder="Nazwisko kupującego" data-required="true">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Numer dowodu osobistego</span>
+              <input type="text" name="buyerDocumentNumber" value="BBB987654" placeholder="Np. BBB987654">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <div class="conditional" data-show-when="buyerType:firma" hidden>
+            <label>
+              <span>Nazwa firmy</span>
+              <input type="text" name="buyerCompanyName" placeholder="Nazwa firmy">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>KRS</span>
+              <input type="text" name="buyerCompanyKrs" placeholder="Numer KRS">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>NIP</span>
+              <input type="text" name="buyerCompanyNip" placeholder="Numer NIP">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Osoba reprezentująca</span>
+              <input type="text" name="buyerCompanyRepresentative" placeholder="Imię i nazwisko reprezentanta">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <label>
+            <span>Adres</span>
+            <input type="text" name="buyerAddress" value="ul. Klonowa 8/12, 02-200 Warszawa" placeholder="Pełny adres" data-required="true">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input type="email" name="buyerEmail" value="anna.nowak@example.pl" placeholder="adres@przyklad.pl">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Telefon</span>
+            <input type="tel" name="buyerPhone" value="700800900" placeholder="Telefon">
+            <small class="error-text"></small>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Notariusz</legend>
+          <label>
+            <span>Sposób dodania</span>
+            <select name="notaryMode">
+              <option value="dropdown" selected>wybierz z listy</option>
+              <option value="email">zaproś mailem</option>
+              <option value="link">wygeneruj link</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="notaryMode:dropdown">
+            <label>
+              <span>Notariusz</span>
+              <select name="stakeholderNotaryContact">
+                <option value="Kancelaria Ewa Lis, Warszawa" selected>Kancelaria Ewa Lis, Warszawa</option>
+                <option value="Kancelaria Maria Zielińska, Warszawa">Kancelaria Maria Zielińska, Warszawa</option>
+                <option value="Kancelaria Tomasz Kruk, Piaseczno">Kancelaria Tomasz Kruk, Piaseczno</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+          </div>
+          <div class="conditional" data-show-when="notaryMode:email" hidden>
+            <label>
+              <span>E-mail do notariusza</span>
+              <input type="email" name="notaryInviteEmail" placeholder="notariusz@kancelaria.pl">
+              <small class="error-text"></small>
+            </label>
+          </div>
+          <div class="conditional" data-show-when="notaryMode:link" hidden>
+            <label>
+              <span>Link dla notariusza</span>
+              <input type="text" name="notaryInviteLink" value="https://securo.local/zaproszenie/notariusz-123">
+              <small class="error-text"></small>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pośrednik po stronie sprzedającego</legend>
+          <label>
+            <span>Czy uczestniczy w transakcji?</span>
+            <select name="sellerBrokerInvolved">
+              <option value="tak" selected>tak</option>
+              <option value="nie">nie</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="sellerBrokerInvolved:tak">
+            <label>
+              <span>Sposób dodania</span>
+              <select name="sellerBrokerMode">
+                <option value="email" selected>zaproś mailem</option>
+                <option value="link">wygeneruj link</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+            <div class="conditional" data-show-when="sellerBrokerMode:email">
+              <label>
+                <span>E-mail pośrednika sprzedającego</span>
+                <input type="email" name="sellerBrokerInviteEmail" placeholder="posrednik.sprzedajacego@biuro.pl">
+                <small class="error-text"></small>
+              </label>
+            </div>
+            <div class="conditional" data-show-when="sellerBrokerMode:link" hidden>
+              <label>
+                <span>Link dla pośrednika sprzedającego</span>
+                <input type="text" name="sellerBrokerInviteLink" value="https://securo.local/zaproszenie/posrednik-sprzedajacego-123">
+                <small class="error-text"></small>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pośrednik po stronie kupującego</legend>
+          <label>
+            <span>Czy uczestniczy w transakcji?</span>
+            <select name="buyerBrokerInvolved">
+              <option value="nie" selected>nie</option>
+              <option value="tak">tak</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="buyerBrokerInvolved:tak" hidden>
+            <label>
+              <span>Sposób dodania</span>
+              <select name="buyerBrokerMode">
+                <option value="email" selected>zaproś mailem</option>
+                <option value="link">wygeneruj link</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+            <div class="conditional" data-show-when="buyerBrokerMode:email">
+              <label>
+                <span>E-mail pośrednika kupującego</span>
+                <input type="email" name="buyerBrokerInviteEmail" placeholder="posrednik.kupujacego@biuro.pl">
+                <small class="error-text"></small>
+              </label>
+            </div>
+            <div class="conditional" data-show-when="buyerBrokerMode:link" hidden>
+              <label>
+                <span>Link dla pośrednika kupującego</span>
+                <input type="text" name="buyerBrokerInviteLink" value="https://securo.local/zaproszenie/posrednik-kupujacego-123">
+                <small class="error-text"></small>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="wizard-step" data-step="2" hidden>
+        <h2>2. Nieruchomość</h2>
+        <p>Zaczynasz od numeru księgi wieczystej. Reszta podstawowych danych nieruchomości jest zaczytywana z przykładowej bazy KAWU.</p>
+
+        <fieldset>
+          <legend>Dane z księgi wieczystej</legend>
+          <label>
+            <span>Numer księgi wieczystej</span>
+            <select name="landRegister" id="landRegisterSelect" data-required="true">
+              <option value="">Wybierz księgę</option>
+              <option value="WA1M/00012345/7" selected>WA1M/00012345/7</option>
+              <option value="WA2P/00099887/1">WA2P/00099887/1</option>
+              <option value="KR1K/00111222/9">KR1K/00111222/9</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Typ nieruchomości</span>
+            <input type="text" name="propertyType" readonly>
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Adres</span>
+            <input type="text" name="propertyAddress" readonly data-required="true">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Powierzchnia</span>
+            <input type="text" name="area" readonly>
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Numer działki</span>
+            <input type="text" name="plotNumber" readonly>
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Udział w gruncie / nieruchomości wspólnej</span>
+            <input type="text" name="sharedInterest" readonly>
+            <small class="error-text"></small>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Zakres sprzedaży</legend>
+          <div class="checkbox-group">
+            <span>Pomieszczenia przynależne</span>
+            <label><input type="checkbox" name="annexRoomsList" value="piwnica" checked> &nbsp;piwnica</label>
+            <label><input type="checkbox" name="annexRoomsList" value="strych"> &nbsp;strych</label>
+            <label><input type="checkbox" name="annexRoomsList" value="garaż"> &nbsp;garaż</label>
+            <label><input type="checkbox" name="annexRoomsList" value="ogródek"> &nbsp;ogródek</label>
+            <label><input type="checkbox" name="annexRoomsList" value="inne" data-toggle-target="annexRoomsOther"> &nbsp;inne</label>
+          </div>
+          <div class="conditional" data-show-checkbox="annexRoomsOther" hidden>
+            <label>
+              <span>Własna pozycja</span>
+              <input type="text" name="annexRoomsOtherText" placeholder="Dodaj własną pozycję">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <span>Miejsce postojowe</span>
+            <label><input type="radio" name="parkingSpaceChoice" value="garaż podziemny" checked> &nbsp;garaż podziemny</label>
+            <label><input type="radio" name="parkingSpaceChoice" value="miejsce naziemne"> &nbsp;miejsce naziemne</label>
+            <label><input type="radio" name="parkingSpaceChoice" value="brak"> &nbsp;brak</label>
+            <label><input type="radio" name="parkingSpaceChoice" value="inne"> &nbsp;inne</label>
+          </div>
+          <div class="conditional" data-show-when="parkingSpaceChoice:inne" hidden>
+            <label>
+              <span>Własny typ miejsca postojowego</span>
+              <input type="text" name="parkingSpaceOtherText" placeholder="Dodaj własną pozycję">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <span>Komórka lokatorska</span>
+            <label><input type="radio" name="storageUnitChoice" value="tak"> &nbsp;tak</label>
+            <label><input type="radio" name="storageUnitChoice" value="brak" checked> &nbsp;brak</label>
+            <label><input type="radio" name="storageUnitChoice" value="inne"> &nbsp;inne</label>
+          </div>
+          <div class="conditional" data-show-when="storageUnitChoice:inne" hidden>
+            <label>
+              <span>Własny opis komórki lokatorskiej</span>
+              <input type="text" name="storageUnitOtherText" placeholder="Dodaj własną pozycję">
+              <small class="error-text"></small>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <span>Wyposażenie objęte sprzedażą</span>
+            <label><input type="checkbox" name="includedEquipmentList" value="zabudowa kuchenna" checked> &nbsp;zabudowa kuchenna</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="sprzęt AGD" checked> &nbsp;sprzęt AGD</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="szafy w zabudowie" checked> &nbsp;szafy w zabudowie</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="oświetlenie"> &nbsp;oświetlenie</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="inne" data-toggle-target="includedEquipmentOther"> &nbsp;inne</label>
+          </div>
+          <div class="conditional" data-show-checkbox="includedEquipmentOther" hidden>
+            <label>
+              <span>Własna pozycja wyposażenia</span>
+              <input type="text" name="includedEquipmentOtherText" placeholder="Dodaj własną pozycję">
+              <small class="error-text"></small>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Status nieruchomości</legend>
+          <label>
+            <span>Czy nieruchomość jest obciążona?</span>
+            <select name="hasEncumbrance">
+              <option value="nie" selected>nie</option>
+              <option value="tak">tak</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="hasEncumbrance:tak" hidden>
+            <div class="checkbox-group">
+              <span>Obciążenia</span>
+              <label><input type="checkbox" name="encumbranceList" value="hipoteka"> &nbsp;hipoteka</label>
+              <label><input type="checkbox" name="encumbranceList" value="służebność"> &nbsp;służebność</label>
+              <label><input type="checkbox" name="encumbranceList" value="roszczenie z umowy"> &nbsp;roszczenie z umowy</label>
+              <label><input type="checkbox" name="encumbranceList" value="egzekucja"> &nbsp;egzekucja</label>
+              <label><input type="checkbox" name="encumbranceList" value="inne" data-toggle-target="encumbranceOther"> &nbsp;inne</label>
+            </div>
+            <div class="conditional" data-show-checkbox="encumbranceOther" hidden>
+              <label>
+                <span>Własne obciążenie</span>
+                <input type="text" name="encumbranceOtherText" placeholder="Dodaj własną pozycję">
+                <small class="error-text"></small>
+              </label>
+            </div>
+          </div>
+
+          <label>
+            <span>Czy nieruchomość jest wynajęta / zajęta?</span>
+            <select name="isOccupied">
+              <option value="nie" selected>nie</option>
+              <option value="tak">tak</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="isOccupied:tak" hidden>
+            <label>
+              <span>Opis stanu posiadania</span>
+              <input type="text" name="occupancyDescription" placeholder="Np. najemca do końca roku">
+              <small class="error-text"></small>
+            </label>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="wizard-step" data-step="3" hidden>
+        <h2>3. Umowy i płatności</h2>
+        <p>Tu ustalasz, które etapy występują i jak rozłożona jest płatność.</p>
+
+        <fieldset>
+          <legend>Zakres umów</legend>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="reservationEnabled" value="tak" checked> &nbsp;umowa rezerwacyjna</label>
+            <label><input type="checkbox" name="preliminaryEnabled" value="tak" checked> &nbsp;umowa przedwstępna</label>
+            <label><input type="checkbox" name="finalEnabled" value="tak" checked disabled> &nbsp;umowa przyrzeczona</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Model płatności</legend>
+          <label>
+            <span>Waluta</span>
+            <select name="currency">
+              <option value="PLN" selected>PLN</option>
+              <option value="EUR">Euro</option>
+              <option value="USD">USD</option>
+              <option value="DAI">DAI</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Cena całkowita</span>
+            <input type="text" name="totalPrice" value="725,000" inputmode="numeric" data-number placeholder="Wpisz cenę całkowitą" data-required="true">
+            <small class="error-text"></small>
+          </label>
+          <label>
+            <span>Sposób finansowania</span>
+            <select name="financingMethod">
+              <option value="">Wybierz</option>
+              <option value="środki własne">środki własne</option>
+              <option value="kredyt" selected>kredyt</option>
+              <option value="środki własne + kredyt">środki własne + kredyt</option>
+              <option value="inny">inny</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+
+          <div class="conditional" data-show-when="reservationEnabled:tak">
+            <fieldset>
+              <legend>Rezerwacja</legend>
+              <label>
+                <span>Model opłaty rezerwacyjnej</span>
+                <select name="reservationFinanceType">
+                  <option value="opłata rezerwacyjna" selected>opłata rezerwacyjna</option>
+                  <option value="zaliczka">zaliczka</option>
+                  <option value="zadatek">zadatek</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+              <label>
+                <span>Kwota dla rezerwacji</span>
+                <input type="text" name="reservationFinanceAmount" value="10,000" inputmode="numeric" data-number placeholder="Kwota dla etapu rezerwacji">
+                <small class="error-text"></small>
+              </label>
+              <div>Udział w cenie całkowitej: <output id="reservationFinancePercent">0%</output></div>
+            </fieldset>
+          </div>
+
+          <div class="conditional" data-show-when="preliminaryEnabled:tak">
+            <fieldset>
+              <legend>Przedwstępna</legend>
+              <label>
+                <span>Model przedpłaty</span>
+                <select name="preliminaryFinanceType">
+                  <option value="zaliczka">zaliczka</option>
+                  <option value="zadatek" selected>zadatek</option>
+                  <option value="zaliczka + zadatek">zaliczka + zadatek</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+              <div class="conditional" data-show-when="preliminaryFinanceType:zaliczka">
+                <label>
+                  <span>Kwota dla zaliczki</span>
+                  <input type="text" name="preliminaryAdvanceAmount" value="50,000" inputmode="numeric" data-number placeholder="Kwota zaliczki">
+                  <small class="error-text"></small>
+                </label>
+                <div>Udział w cenie całkowitej: <output id="preliminaryAdvancePercent">0%</output></div>
+              </div>
+              <div class="conditional" data-show-when="preliminaryFinanceType:zadatek" hidden>
+                <label>
+                  <span>Kwota dla zadatku</span>
+                  <input type="text" name="preliminaryEarnestAmount" value="50,000" inputmode="numeric" data-number placeholder="Kwota zadatku">
+                  <small class="error-text"></small>
+                </label>
+                <div>Udział w cenie całkowitej: <output id="preliminaryEarnestPercent">0%</output></div>
+              </div>
+              <div class="conditional" data-show-when="preliminaryFinanceType:zaliczka + zadatek" hidden>
+                <label>
+                  <span>Kwota dla zaliczki</span>
+                  <input type="text" name="preliminaryAdvanceMixedAmount" value="20,000" inputmode="numeric" data-number placeholder="Kwota zaliczki">
+                  <small class="error-text"></small>
+                </label>
+                <div>Udział w cenie całkowitej: <output id="preliminaryAdvanceMixedPercent">0%</output></div>
+                <label>
+                  <span>Kwota dla zadatku</span>
+                  <input type="text" name="preliminaryEarnestMixedAmount" value="30,000" inputmode="numeric" data-number placeholder="Kwota zadatku">
+                  <small class="error-text"></small>
+                </label>
+                <div>Udział w cenie całkowitej: <output id="preliminaryEarnestMixedPercent">0%</output></div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="conditional" data-show-when="financingMethod:kredyt|środki własne + kredyt" hidden>
+            <fieldset>
+              <legend>Finansowanie kredytem</legend>
+              <label>
+                <span>Kwota finansowania kredytem</span>
+                <input type="text" name="creditAmount" value="500,000" inputmode="numeric" data-number placeholder="Kwota kredytu">
+                <small class="error-text"></small>
+              </label>
+              <div>Udział w cenie całkowitej: <output id="creditAmountPercent">0%</output></div>
+              <label>
+                <span>Kwota środków własnych</span>
+                <input type="text" name="ownFundsAmount" value="225,000" inputmode="numeric" data-number placeholder="Kwota środków własnych">
+                <small class="error-text"></small>
+              </label>
+              <div>Udział w cenie całkowitej: <output id="ownFundsPercent">0%</output></div>
+              <label>
+                <span>Status kredytowania</span>
+                <select name="creditStage">
+                  <option value="jeszcze nie aplikowano" selected>jeszcze nie aplikowano</option>
+                  <option value="zaaplikowano">zaaplikowano</option>
+                  <option value="promesa">promesa</option>
+                  <option value="pozytywna decyzja">pozytywna decyzja</option>
+                  <option value="negatywna decyzja">negatywna decyzja</option>
+                  <option value="uruchomiony kredyt">uruchomiony kredyt</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+            </fieldset>
+          </div>
+
+          <label>
+            <span>Finalna</span>
+            <select name="finalFinanceMode">
+              <option value="jednorazowo">jednorazowo</option>
+              <option value="w transzach" selected>w transzach</option>
+            </select>
+            <small class="error-text"></small>
+          </label>
+          <div class="conditional" data-show-when="finalFinanceMode:w transzach">
+            <label>
+              <span>Liczba transz końcowych</span>
+              <input type="text" name="finalInstallmentsCount" value="2" inputmode="numeric" data-number placeholder="Liczba transz">
+              <small class="error-text"></small>
+            </label>
+            <div id="finalInstallmentsDetails"></div>
+          </div>
+        </fieldset>
+
+        <section class="stage-section" id="reservationSection">
+          <h3>3A. Umowa rezerwacyjna</h3>
+          <fieldset>
+            <legend>Najważniejsze ustalenia</legend>
+            <label>
+              <span>Data zawarcia</span>
+              <input type="date" name="reservationContractDate" value="2026-04-24">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Okres rezerwacji od</span>
+              <input type="date" name="reservationFrom" value="2026-04-25">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Okres rezerwacji do</span>
+              <input type="date" name="reservationTo" value="2026-05-10">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Czy sprzedający wyłącza ofertę z obrotu?</span>
+              <select name="offerWithdrawal">
+                <option value="tak" selected>tak</option>
+                <option value="nie">nie</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+          </fieldset>
+        </section>
+
+        <section class="stage-section" id="preliminarySection">
+          <h3>3B. Umowa przedwstępna</h3>
+          <fieldset>
+            <legend>Najważniejsze ustalenia</legend>
+            <label>
+              <span>Data zawarcia</span>
+              <input type="date" name="preliminaryDate" value="2026-04-24">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Termin umowy przyrzeczonej</span>
+              <input type="date" name="promisedDate" value="2026-06-30">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Łączna kwota przedpłaty</span>
+              <input type="text" name="prepaymentTotal" value="50,000" inputmode="numeric" data-number>
+              <small class="error-text"></small>
+            </label>
+            <div id="prepaymentValidationMessage" aria-live="polite"></div>
+            <label>
+              <span>Koszty notariusza ponosi</span>
+              <select name="notaryCostsPreliminary">
+                <option value="kupujący" selected>kupujący</option>
+                <option value="sprzedający">sprzedający</option>
+                <option value="po połowie">po połowie</option>
+                <option value="inaczej">inaczej</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+            <div class="conditional" data-show-when="notaryCostsPreliminary:inaczej" hidden>
+              <label>
+                <span>Opisz inny podział kosztów</span>
+                <input type="text" name="notaryCostsPreliminaryOther" placeholder="Np. 70% kupujący, 30% sprzedający">
+                <small class="error-text"></small>
+              </label>
+            </div>
+            <div class="checkbox-group">
+              <span>Inne warunki</span>
+              <label><input type="checkbox" name="otherConditionsList" value="wcześniejsze podpisanie aktu" checked> &nbsp;wcześniejsze podpisanie aktu</label>
+              <label><input type="checkbox" name="otherConditionsList" value="wydanie po pełnej zapłacie"> &nbsp;wydanie po pełnej zapłacie</label>
+              <label><input type="checkbox" name="otherConditionsList" value="uzupełnienie dokumentów"> &nbsp;uzupełnienie dokumentów</label>
+              <label><input type="checkbox" name="otherConditionsList" value="inne" data-toggle-target="otherConditionsOther"> &nbsp;inne</label>
+            </div>
+            <div class="conditional" data-show-checkbox="otherConditionsOther" hidden>
+              <label>
+                <span>Własny warunek</span>
+                <input type="text" name="otherConditionsOtherText" placeholder="Dodaj własny warunek">
+                <small class="error-text"></small>
+              </label>
+            </div>
+            <fieldset>
+              <legend>Wpisy do KAWU / KW</legend>
+              <label>
+                <span>Czy składamy wniosek o wpis roszczenia?</span>
+                <select name="claimEntryEnabled">
+                  <option value="nie" selected>nie</option>
+                  <option value="tak">tak</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+              <div class="conditional" data-show-when="claimEntryEnabled:tak" hidden>
+                <label>
+                  <span>Rodzaj roszczenia</span>
+                  <select name="claimEntryType">
+                    <option value="roszczenie o zawarcie umowy przyrzeczonej" selected>roszczenie o zawarcie umowy przyrzeczonej</option>
+                    <option value="roszczenie o przeniesienie własności">roszczenie o przeniesienie własności</option>
+                    <option value="inne">inne</option>
+                  </select>
+                  <small class="error-text"></small>
+                </label>
+                <div class="conditional" data-show-when="claimEntryType:inne" hidden>
+                  <label>
+                    <span>Własny rodzaj roszczenia</span>
+                    <input type="text" name="claimEntryTypeOther" placeholder="Dodaj własny rodzaj roszczenia">
+                    <small class="error-text"></small>
+                  </label>
+                </div>
+                <label>
+                  <span>Kto składa wniosek?</span>
+                  <select name="claimEntryApplicant">
+                    <option value="kupujący" selected>kupujący</option>
+                    <option value="sprzedający">sprzedający</option>
+                    <option value="notariusz">notariusz</option>
+                    <option value="wspólnie">wspólnie</option>
+                  </select>
+                  <small class="error-text"></small>
+                </label>
+              </div>
+            </fieldset>
+          </fieldset>
+        </section>
+
+        <section class="stage-section" id="finalSection">
+          <h3>3C. Umowa przyrzeczona</h3>
+          <fieldset>
+            <legend>Najważniejsze ustalenia</legend>
+            <label>
+              <span>Data aktu</span>
+              <input type="date" name="finalActDate" value="2026-07-10">
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Cena ostateczna</span>
+              <input type="text" name="finalPrice" value="725,000" inputmode="numeric" data-number>
+              <small class="error-text"></small>
+            </label>
+            <div id="alreadyPaidBlock">
+              <label>
+                <span>Kwota już zapłacona wcześniej</span>
+                <input type="text" name="alreadyPaid" value="50,000" inputmode="numeric" data-number>
+                <small class="error-text"></small>
+              </label>
+              <label>
+                <span>Klasyfikacja wcześniej zapłaconej kwoty</span>
+                <select name="alreadyPaidType">
+                  <option value="zadatek" selected>zadatek</option>
+                  <option value="opłata rezerwacyjna">opłata rezerwacyjna</option>
+                  <option value="zaliczka">zaliczka</option>
+                  <option value="część ceny">część ceny</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+            </div>
+            <label>
+              <span>Pozostała kwota do zapłaty</span>
+              <input type="text" name="remainingAmount" value="675,000" inputmode="numeric" data-number>
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Sposób zapłaty pozostałej kwoty</span>
+              <select name="remainingPaymentMethod">
+                <option value="przelew w dniu aktu" selected>przelew w dniu aktu</option>
+                <option value="przelew przed aktem">przelew przed aktem</option>
+                <option value="przelew po akcie">przelew po akcie</option>
+                <option value="kredyt bankowy">kredyt bankowy</option>
+                <option value="depozyt notarialny">depozyt notarialny</option>
+                <option value="escrow / rachunek techniczny">escrow / rachunek techniczny</option>
+              </select>
+              <small class="error-text"></small>
+            </label>
+            <div class="conditional" data-show-when="remainingPaymentMethod:depozyt notarialny|escrow / rachunek techniczny" hidden>
+              <label>
+                <span>Mechanizm depozytu</span>
+                <select name="depositMechanism">
+                  <option value="depozyt notarialny" selected>depozyt notarialny</option>
+                  <option value="Secura">Secura</option>
+                </select>
+                <small class="error-text"></small>
+              </label>
+              <div class="checkbox-group">
+                <span>Warunek uruchomienia wypłaty</span>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="po podpisaniu aktu" checked> &nbsp;po podpisaniu aktu</label>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="po wpisie własności kupującego"> &nbsp;po wpisie własności kupującego</label>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="po złożeniu wniosku wieczystoksięgowego"> &nbsp;po złożeniu wniosku wieczystoksięgowego</label>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="po wykreśleniu hipoteki"> &nbsp;po wykreśleniu hipoteki</label>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="inne" data-toggle-target="depositReleaseOther"> &nbsp;inne</label>
+              </div>
+              <div class="conditional" data-show-checkbox="depositReleaseOther" hidden>
+                <label>
+                  <span>Własny warunek wypłaty</span>
+                  <input type="text" name="depositReleaseConditionOther" placeholder="Dodaj własny warunek wypłaty">
+                  <small class="error-text"></small>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </section>
+      </section>
+
+      <section class="wizard-step" data-step="4" hidden>
+        <h2>4. Kredytowanie</h2>
+        <p>To krok operacyjny. Pokazuje się tylko wtedy, gdy transakcja korzysta z kredytu.</p>
+
+        <div id="creditStepInfo" hidden>
+          <p>W tym wariancie nie ma kredytu, więc ten krok nie wymaga uzupełnienia.</p>
+        </div>
+
+        <div id="creditStepForm">
+          <fieldset>
+            <legend>Lista aplikacji bankowych</legend>
+            <p>Kwota kredytu i środki własne wynikają z kroku „Umowy i płatności”. Tutaj wybierasz tylko banki, do których wysyłasz aplikację.</p>
+            <label>
+              <span>Kwota kredytu do aplikacji</span>
+              <input type="text" name="creditAmountReadonly" readonly>
+              <small class="error-text"></small>
+            </label>
+            <label>
+              <span>Kwota środków własnych</span>
+              <input type="text" name="ownFundsAmountReadonly" readonly>
+              <small class="error-text"></small>
+            </label>
+            <div id="creditBankList"></div>
+            <button type="button" id="addCreditBankButton">Dodaj bank</button>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="wizard-step" data-step="5" hidden>
+        <h2>5. Na koniec - podsumowanie</h2>
+        <p>Tu widać, co już ustalono i czego jeszcze brakuje.</p>
+        <div id="summaryContent">Podsumowanie pojawi się tutaj.</div>
+      </section>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
