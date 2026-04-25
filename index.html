@@ -337,7 +337,7 @@
             <span>Typ sprzedającego</span>
             <select name="sellerType" data-required="true">
               <option value="">Wybierz</option>
-              <option value="osoba fizyczna" selected>osoba fizyczna</option>
+              <option value="osoba fizyczna">osoba fizyczna</option>
               <option value="firma">firma</option>
             </select>
             <small class="error-text"></small>
@@ -415,7 +415,7 @@
             <span>Typ kupującego</span>
             <select name="buyerType" data-required="true">
               <option value="">Wybierz</option>
-              <option value="osoba fizyczna" selected>osoba fizyczna</option>
+              <option value="osoba fizyczna">osoba fizyczna</option>
               <option value="firma">firma</option>
             </select>
             <small class="error-text"></small>
@@ -493,8 +493,9 @@
           <div class="conditional" data-show-when="notaryMode:dropdown">
             <label>
               <span>Notariusz</span>
-              <select name="stakeholderNotaryContact">
-                <option value="Kancelaria Ewa Lis, Warszawa" selected>Kancelaria Ewa Lis, Warszawa</option>
+            <select name="stakeholderNotaryContact">
+                <option value="" selected>Wybierz notariusza</option>
+                <option value="Kancelaria Ewa Lis, Warszawa">Kancelaria Ewa Lis, Warszawa</option>
                 <option value="Kancelaria Maria Zielińska, Warszawa">Kancelaria Maria Zielińska, Warszawa</option>
                 <option value="Kancelaria Tomasz Kruk, Piaseczno">Kancelaria Tomasz Kruk, Piaseczno</option>
               </select>
@@ -522,8 +523,8 @@
           <label>
             <span>Czy uczestniczy w transakcji?</span>
             <select name="sellerBrokerInvolved">
-              <option value="tak" selected>tak</option>
-              <option value="nie">nie</option>
+              <option value="nie" selected>nie</option>
+              <option value="tak">tak</option>
             </select>
             <small class="error-text"></small>
           </label>
@@ -600,7 +601,7 @@
             <span>Numer księgi wieczystej</span>
             <select name="landRegister" id="landRegisterSelect" data-required="true">
               <option value="">Wybierz księgę</option>
-              <option value="WA1M/00012345/7" selected>WA1M/00012345/7</option>
+              <option value="WA1M/00012345/7">WA1M/00012345/7</option>
               <option value="WA2P/00099887/1">WA2P/00099887/1</option>
               <option value="KR1K/00111222/9">KR1K/00111222/9</option>
             </select>
@@ -637,7 +638,7 @@
           <legend>Zakres sprzedaży</legend>
           <div class="checkbox-group">
             <span>Pomieszczenia przynależne</span>
-            <label><input type="checkbox" name="annexRoomsList" value="piwnica" checked> &nbsp;piwnica</label>
+            <label><input type="checkbox" name="annexRoomsList" value="piwnica"> &nbsp;piwnica</label>
             <label><input type="checkbox" name="annexRoomsList" value="strych"> &nbsp;strych</label>
             <label><input type="checkbox" name="annexRoomsList" value="garaż"> &nbsp;garaż</label>
             <label><input type="checkbox" name="annexRoomsList" value="ogródek"> &nbsp;ogródek</label>
@@ -653,7 +654,7 @@
 
           <div class="checkbox-group">
             <span>Miejsce postojowe</span>
-            <label><input type="radio" name="parkingSpaceChoice" value="garaż podziemny" checked> &nbsp;garaż podziemny</label>
+            <label><input type="radio" name="parkingSpaceChoice" value="garaż podziemny"> &nbsp;garaż podziemny</label>
             <label><input type="radio" name="parkingSpaceChoice" value="miejsce naziemne"> &nbsp;miejsce naziemne</label>
             <label><input type="radio" name="parkingSpaceChoice" value="brak"> &nbsp;brak</label>
             <label><input type="radio" name="parkingSpaceChoice" value="inne"> &nbsp;inne</label>
@@ -669,7 +670,7 @@
           <div class="checkbox-group">
             <span>Komórka lokatorska</span>
             <label><input type="radio" name="storageUnitChoice" value="tak"> &nbsp;tak</label>
-            <label><input type="radio" name="storageUnitChoice" value="brak" checked> &nbsp;brak</label>
+            <label><input type="radio" name="storageUnitChoice" value="brak"> &nbsp;brak</label>
             <label><input type="radio" name="storageUnitChoice" value="inne"> &nbsp;inne</label>
           </div>
           <div class="conditional" data-show-when="storageUnitChoice:inne" hidden>
@@ -682,9 +683,9 @@
 
           <div class="checkbox-group">
             <span>Wyposażenie objęte sprzedażą</span>
-            <label><input type="checkbox" name="includedEquipmentList" value="zabudowa kuchenna" checked> &nbsp;zabudowa kuchenna</label>
-            <label><input type="checkbox" name="includedEquipmentList" value="sprzęt AGD" checked> &nbsp;sprzęt AGD</label>
-            <label><input type="checkbox" name="includedEquipmentList" value="szafy w zabudowie" checked> &nbsp;szafy w zabudowie</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="zabudowa kuchenna"> &nbsp;zabudowa kuchenna</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="sprzęt AGD"> &nbsp;sprzęt AGD</label>
+            <label><input type="checkbox" name="includedEquipmentList" value="szafy w zabudowie"> &nbsp;szafy w zabudowie</label>
             <label><input type="checkbox" name="includedEquipmentList" value="oświetlenie"> &nbsp;oświetlenie</label>
             <label><input type="checkbox" name="includedEquipmentList" value="inne" data-toggle-target="includedEquipmentOther"> &nbsp;inne</label>
           </div>
@@ -750,8 +751,8 @@
         <fieldset>
           <legend>Zakres umów</legend>
           <div class="checkbox-group">
-            <label><input type="checkbox" name="reservationEnabled" value="tak" checked> &nbsp;umowa rezerwacyjna</label>
-            <label><input type="checkbox" name="preliminaryEnabled" value="tak" checked> &nbsp;umowa przedwstępna</label>
+            <label><input type="checkbox" name="reservationEnabled" value="tak"> &nbsp;umowa rezerwacyjna</label>
+            <label><input type="checkbox" name="preliminaryEnabled" value="tak"> &nbsp;umowa przedwstępna</label>
             <label><input type="checkbox" name="finalEnabled" value="tak" checked disabled> &nbsp;umowa przyrzeczona</label>
           </div>
         </fieldset>
@@ -778,7 +779,7 @@
             <select name="financingMethod">
               <option value="">Wybierz</option>
               <option value="środki własne">środki własne</option>
-              <option value="kredyt" selected>kredyt</option>
+              <option value="kredyt">kredyt</option>
               <option value="środki własne + kredyt">środki własne + kredyt</option>
               <option value="inny">inny</option>
             </select>
@@ -869,7 +870,8 @@
               <label>
                 <span>Status kredytowania</span>
                 <select name="creditStage">
-                  <option value="jeszcze nie aplikowano" selected>jeszcze nie aplikowano</option>
+                  <option value="" selected>Wybierz status</option>
+                  <option value="jeszcze nie aplikowano">jeszcze nie aplikowano</option>
                   <option value="zaaplikowano">zaaplikowano</option>
                   <option value="promesa">promesa</option>
                   <option value="pozytywna decyzja">pozytywna decyzja</option>
@@ -885,7 +887,7 @@
             <span>Finalna</span>
             <select name="finalFinanceMode">
               <option value="jednorazowo">jednorazowo</option>
-              <option value="w transzach" selected>w transzach</option>
+              <option value="w transzach">w transzach</option>
             </select>
             <small class="error-text"></small>
           </label>
@@ -921,7 +923,8 @@
             <label>
               <span>Czy sprzedający wyłącza ofertę z obrotu?</span>
               <select name="offerWithdrawal">
-                <option value="tak" selected>tak</option>
+                <option value="">Wybierz</option>
+                <option value="tak">tak</option>
                 <option value="nie">nie</option>
               </select>
               <small class="error-text"></small>
@@ -952,7 +955,8 @@
             <label>
               <span>Koszty notariusza ponosi</span>
               <select name="notaryCostsPreliminary">
-                <option value="kupujący" selected>kupujący</option>
+                <option value="">Wybierz</option>
+                <option value="kupujący">kupujący</option>
                 <option value="sprzedający">sprzedający</option>
                 <option value="po połowie">po połowie</option>
                 <option value="inaczej">inaczej</option>
@@ -968,7 +972,7 @@
             </div>
             <div class="checkbox-group">
               <span>Inne warunki</span>
-              <label><input type="checkbox" name="otherConditionsList" value="wcześniejsze podpisanie aktu" checked> &nbsp;wcześniejsze podpisanie aktu</label>
+              <label><input type="checkbox" name="otherConditionsList" value="wcześniejsze podpisanie aktu"> &nbsp;wcześniejsze podpisanie aktu</label>
               <label><input type="checkbox" name="otherConditionsList" value="wydanie po pełnej zapłacie"> &nbsp;wydanie po pełnej zapłacie</label>
               <label><input type="checkbox" name="otherConditionsList" value="uzupełnienie dokumentów"> &nbsp;uzupełnienie dokumentów</label>
               <label><input type="checkbox" name="otherConditionsList" value="inne" data-toggle-target="otherConditionsOther"> &nbsp;inne</label>
@@ -985,7 +989,8 @@
               <label>
                 <span>Czy składamy wniosek o wpis roszczenia?</span>
                 <select name="claimEntryEnabled">
-                  <option value="nie" selected>nie</option>
+                  <option value="">Wybierz</option>
+                  <option value="nie">nie</option>
                   <option value="tak">tak</option>
                 </select>
                 <small class="error-text"></small>
@@ -994,7 +999,8 @@
                 <label>
                   <span>Rodzaj roszczenia</span>
                   <select name="claimEntryType">
-                    <option value="roszczenie o zawarcie umowy przyrzeczonej" selected>roszczenie o zawarcie umowy przyrzeczonej</option>
+                    <option value="" selected>Wybierz rodzaj roszczenia</option>
+                    <option value="roszczenie o zawarcie umowy przyrzeczonej">roszczenie o zawarcie umowy przyrzeczonej</option>
                     <option value="roszczenie o przeniesienie własności">roszczenie o przeniesienie własności</option>
                     <option value="inne">inne</option>
                   </select>
@@ -1010,7 +1016,8 @@
                 <label>
                   <span>Kto składa wniosek?</span>
                   <select name="claimEntryApplicant">
-                    <option value="kupujący" selected>kupujący</option>
+                    <option value="" selected>Wybierz składającego</option>
+                    <option value="kupujący">kupujący</option>
                     <option value="sprzedający">sprzedający</option>
                     <option value="notariusz">notariusz</option>
                     <option value="wspólnie">wspólnie</option>
@@ -1045,7 +1052,8 @@
               <label>
                 <span>Klasyfikacja wcześniej zapłaconej kwoty</span>
                 <select name="alreadyPaidType">
-                  <option value="zadatek" selected>zadatek</option>
+                  <option value="">Wybierz klasyfikację</option>
+                  <option value="zadatek">zadatek</option>
                   <option value="opłata rezerwacyjna">opłata rezerwacyjna</option>
                   <option value="zaliczka">zaliczka</option>
                   <option value="część ceny">część ceny</option>
@@ -1061,7 +1069,8 @@
             <label>
               <span>Sposób zapłaty pozostałej kwoty</span>
               <select name="remainingPaymentMethod">
-                <option value="przelew w dniu aktu" selected>przelew w dniu aktu</option>
+                <option value="" selected>Wybierz sposób płatności</option>
+                <option value="przelew w dniu aktu">przelew w dniu aktu</option>
                 <option value="przelew przed aktem">przelew przed aktem</option>
                 <option value="przelew po akcie">przelew po akcie</option>
                 <option value="kredyt bankowy">kredyt bankowy</option>
@@ -1074,14 +1083,15 @@
               <label>
                 <span>Mechanizm depozytu</span>
                 <select name="depositMechanism">
-                  <option value="depozyt notarialny" selected>depozyt notarialny</option>
+                  <option value="" selected>Wybierz mechanizm</option>
+                  <option value="depozyt notarialny">depozyt notarialny</option>
                   <option value="Secura">Secura</option>
                 </select>
                 <small class="error-text"></small>
               </label>
               <div class="checkbox-group">
                 <span>Warunek uruchomienia wypłaty</span>
-                <label><input type="checkbox" name="depositReleaseConditionList" value="po podpisaniu aktu" checked> &nbsp;po podpisaniu aktu</label>
+                <label><input type="checkbox" name="depositReleaseConditionList" value="po podpisaniu aktu"> &nbsp;po podpisaniu aktu</label>
                 <label><input type="checkbox" name="depositReleaseConditionList" value="po wpisie własności kupującego"> &nbsp;po wpisie własności kupującego</label>
                 <label><input type="checkbox" name="depositReleaseConditionList" value="po złożeniu wniosku wieczystoksięgowego"> &nbsp;po złożeniu wniosku wieczystoksięgowego</label>
                 <label><input type="checkbox" name="depositReleaseConditionList" value="po wykreśleniu hipoteki"> &nbsp;po wykreśleniu hipoteki</label>

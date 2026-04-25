@@ -157,11 +157,11 @@ function getCreditBankValues() {
 
 function renderCreditBankList(count) {
   const savedValues = getCreditBankValues();
-  const listCount = Math.max(1, Math.min(count || savedValues.length || 2, 6));
+  const listCount = Math.max(1, Math.min(count || savedValues.length || 1, 6));
 
   creditBankList.innerHTML = Array.from({ length: listCount }, (_, offset) => {
     const index = offset + 1;
-    const saved = savedValues[index - 1] || (index === 1 ? "Bank Przykład S.A." : index === 2 ? "Bank Hipoteczny S.A." : "");
+    const saved = savedValues[index - 1] || "";
 
     return `
       <fieldset data-credit-bank-row="${index}" style="margin-top: 12px;">
@@ -169,7 +169,7 @@ function renderCreditBankList(count) {
         <label>
           <span>Bank do aplikacji</span>
           <select name="creditBank_${index}">
-            <option value="">Wybierz bank</option>
+            <option value="" ${saved === "" ? "selected" : ""}>Wybierz bank</option>
             <option value="Bank Przykład S.A." ${saved === "Bank Przykład S.A." ? "selected" : ""}>Bank Przykład S.A.</option>
             <option value="Bank Hipoteczny S.A." ${saved === "Bank Hipoteczny S.A." ? "selected" : ""}>Bank Hipoteczny S.A.</option>
             <option value="Bank Dom S.A." ${saved === "Bank Dom S.A." ? "selected" : ""}>Bank Dom S.A.</option>
@@ -203,13 +203,17 @@ function renderFinalInstallments() {
   }
 
   const savedValues = getFinalInstallmentValues();
-  const count = Math.max(1, Math.min(parseNumber(getFieldValue("finalInstallmentsCount")) || 1, 12));
-  const defaultAmount = formatThousands(Math.round(parseNumber(getFieldValue("remainingAmount")) / count));
+  const rawCount = parseNumber(getFieldValue("finalInstallmentsCount"));
+  if (!rawCount) {
+    finalInstallmentsDetails.innerHTML = "";
+    return;
+  }
+  const count = Math.max(1, Math.min(rawCount, 12));
 
   finalInstallmentsDetails.innerHTML = Array.from({ length: count }, (_, offset) => {
     const index = offset + 1;
     const saved = savedValues.find((item) => Number(item.index) === index) || {};
-    const condition = saved.condition || (index === 1 ? "po decyzji kredytowej" : "w dniu aktu");
+    const condition = saved.condition || "";
 
     return `
       <fieldset data-installment-row="${index}" style="margin-top: 12px;">
@@ -222,6 +226,7 @@ function renderFinalInstallments() {
         <label>
           <span>Warunek</span>
           <select name="finalInstallmentCondition_${index}">
+            <option value="" ${condition === "" ? "selected" : ""}>Wybierz warunek</option>
             <option value="po decyzji kredytowej" ${condition === "po decyzji kredytowej" ? "selected" : ""}>po decyzji kredytowej</option>
             <option value="w dniu aktu" ${condition === "w dniu aktu" ? "selected" : ""}>w dniu aktu</option>
             <option value="po podpisaniu aktu" ${condition === "po podpisaniu aktu" ? "selected" : ""}>po podpisaniu aktu</option>
@@ -240,7 +245,7 @@ function renderFinalInstallments() {
         </div>
         <label>
           <span>Kwota</span>
-          <input type="text" name="finalInstallmentAmount_${index}" value="${saved.amount || defaultAmount}" inputmode="numeric" data-number placeholder="Kwota transzy">
+          <input type="text" name="finalInstallmentAmount_${index}" value="${saved.amount || ""}" inputmode="numeric" data-number placeholder="Kwota transzy">
           <small class="error-text"></small>
         </label>
       </fieldset>
