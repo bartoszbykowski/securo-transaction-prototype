@@ -346,17 +346,17 @@
           <div class="conditional" data-show-when="sellerType:osoba fizyczna">
             <label>
               <span>Imię</span>
-              <input type="text" name="sellerFirstName" value="Jan" placeholder="Imię sprzedającego" data-required="true">
+              <input type="text" name="sellerFirstName" placeholder="Imię sprzedającego" data-required="true">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Nazwisko</span>
-              <input type="text" name="sellerLastName" value="Kowalski" placeholder="Nazwisko sprzedającego" data-required="true">
+              <input type="text" name="sellerLastName" placeholder="Nazwisko sprzedającego" data-required="true">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Numer dowodu osobistego</span>
-              <input type="text" name="sellerDocumentNumber" value="AWA123456" placeholder="Np. AWA123456">
+              <input type="text" name="sellerDocumentNumber" placeholder="Np. AWA123456">
               <small class="error-text"></small>
             </label>
           </div>
@@ -386,24 +386,24 @@
 
           <label>
             <span>Adres</span>
-            <input type="text" name="sellerAddress" value="ul. Lipowa 10/5, 00-100 Warszawa" placeholder="Pełny adres" data-required="true">
+            <input type="text" name="sellerAddress" placeholder="Pełny adres" data-required="true">
             <small class="error-text"></small>
           </label>
           <label>
             <span>E-mail</span>
-            <input type="email" name="sellerEmail" value="jan.kowalski@example.pl" placeholder="adres@przyklad.pl">
+            <input type="email" name="sellerEmail" placeholder="adres@przyklad.pl">
             <small class="error-text"></small>
           </label>
           <label>
             <span>Telefon</span>
-            <input type="tel" name="sellerPhone" value="500600700" placeholder="Telefon">
+            <input type="tel" name="sellerPhone" placeholder="Telefon">
             <small class="error-text"></small>
           </label>
           <fieldset>
             <legend>Rachunek do płatności sprzedającego</legend>
             <label>
               <span>Numer rachunku</span>
-              <input type="text" name="sellerPaymentAccount" value="11 2222 3333 4444 5555 6666 7777" placeholder="Numer rachunku">
+              <input type="text" name="sellerPaymentAccount" placeholder="Numer rachunku">
               <small class="error-text"></small>
             </label>
           </fieldset>
@@ -424,17 +424,17 @@
           <div class="conditional" data-show-when="buyerType:osoba fizyczna">
             <label>
               <span>Imię</span>
-              <input type="text" name="buyerFirstName" value="Anna" placeholder="Imię kupującego" data-required="true">
+              <input type="text" name="buyerFirstName" placeholder="Imię kupującego" data-required="true">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Nazwisko</span>
-              <input type="text" name="buyerLastName" value="Nowak" placeholder="Nazwisko kupującego" data-required="true">
+              <input type="text" name="buyerLastName" placeholder="Nazwisko kupującego" data-required="true">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Numer dowodu osobistego</span>
-              <input type="text" name="buyerDocumentNumber" value="BBB987654" placeholder="Np. BBB987654">
+              <input type="text" name="buyerDocumentNumber" placeholder="Np. BBB987654">
               <small class="error-text"></small>
             </label>
           </div>
@@ -464,17 +464,17 @@
 
           <label>
             <span>Adres</span>
-            <input type="text" name="buyerAddress" value="ul. Klonowa 8/12, 02-200 Warszawa" placeholder="Pełny adres" data-required="true">
+            <input type="text" name="buyerAddress" placeholder="Pełny adres" data-required="true">
             <small class="error-text"></small>
           </label>
           <label>
             <span>E-mail</span>
-            <input type="email" name="buyerEmail" value="anna.nowak@example.pl" placeholder="adres@przyklad.pl">
+            <input type="email" name="buyerEmail" placeholder="adres@przyklad.pl">
             <small class="error-text"></small>
           </label>
           <label>
             <span>Telefon</span>
-            <input type="tel" name="buyerPhone" value="700800900" placeholder="Telefon">
+            <input type="tel" name="buyerPhone" placeholder="Telefon">
             <small class="error-text"></small>
           </label>
         </fieldset>
@@ -511,7 +511,7 @@
           <div class="conditional" data-show-when="notaryMode:link" hidden>
             <label>
               <span>Link dla notariusza</span>
-              <input type="text" name="notaryInviteLink" value="https://securo.local/zaproszenie/notariusz-123">
+              <input type="text" name="notaryInviteLink" placeholder="Link zostanie wygenerowany">
               <small class="error-text"></small>
             </label>
           </div>
@@ -546,7 +546,7 @@
             <div class="conditional" data-show-when="sellerBrokerMode:link" hidden>
               <label>
                 <span>Link dla pośrednika sprzedającego</span>
-                <input type="text" name="sellerBrokerInviteLink" value="https://securo.local/zaproszenie/posrednik-sprzedajacego-123">
+                <input type="text" name="sellerBrokerInviteLink" placeholder="Link zostanie wygenerowany">
                 <small class="error-text"></small>
               </label>
             </div>
@@ -582,7 +582,7 @@
             <div class="conditional" data-show-when="buyerBrokerMode:link" hidden>
               <label>
                 <span>Link dla pośrednika kupującego</span>
-                <input type="text" name="buyerBrokerInviteLink" value="https://securo.local/zaproszenie/posrednik-kupujacego-123">
+                <input type="text" name="buyerBrokerInviteLink" placeholder="Link zostanie wygenerowany">
                 <small class="error-text"></small>
               </label>
             </div>
@@ -770,7 +770,7 @@
           </label>
           <label>
             <span>Cena całkowita</span>
-            <input type="text" name="totalPrice" value="725,000" inputmode="numeric" data-number placeholder="Wpisz cenę całkowitą" data-required="true">
+            <input type="text" name="totalPrice" inputmode="numeric" data-number placeholder="Wpisz cenę całkowitą" data-required="true">
             <small class="error-text"></small>
           </label>
           <label>
@@ -799,7 +799,7 @@
               </label>
               <label>
                 <span>Kwota dla rezerwacji</span>
-                <input type="text" name="reservationFinanceAmount" value="10,000" inputmode="numeric" data-number placeholder="Kwota dla etapu rezerwacji">
+                <input type="text" name="reservationFinanceAmount" inputmode="numeric" data-number placeholder="Kwota dla etapu rezerwacji">
                 <small class="error-text"></small>
               </label>
               <div>Udział w cenie całkowitej: <output id="reservationFinancePercent">0%</output></div>
@@ -821,7 +821,7 @@
               <div class="conditional" data-show-when="preliminaryFinanceType:zaliczka">
                 <label>
                   <span>Kwota dla zaliczki</span>
-                  <input type="text" name="preliminaryAdvanceAmount" value="50,000" inputmode="numeric" data-number placeholder="Kwota zaliczki">
+                  <input type="text" name="preliminaryAdvanceAmount" inputmode="numeric" data-number placeholder="Kwota zaliczki">
                   <small class="error-text"></small>
                 </label>
                 <div>Udział w cenie całkowitej: <output id="preliminaryAdvancePercent">0%</output></div>
@@ -829,7 +829,7 @@
               <div class="conditional" data-show-when="preliminaryFinanceType:zadatek" hidden>
                 <label>
                   <span>Kwota dla zadatku</span>
-                  <input type="text" name="preliminaryEarnestAmount" value="50,000" inputmode="numeric" data-number placeholder="Kwota zadatku">
+                  <input type="text" name="preliminaryEarnestAmount" inputmode="numeric" data-number placeholder="Kwota zadatku">
                   <small class="error-text"></small>
                 </label>
                 <div>Udział w cenie całkowitej: <output id="preliminaryEarnestPercent">0%</output></div>
@@ -837,13 +837,13 @@
               <div class="conditional" data-show-when="preliminaryFinanceType:zaliczka + zadatek" hidden>
                 <label>
                   <span>Kwota dla zaliczki</span>
-                  <input type="text" name="preliminaryAdvanceMixedAmount" value="20,000" inputmode="numeric" data-number placeholder="Kwota zaliczki">
+                  <input type="text" name="preliminaryAdvanceMixedAmount" inputmode="numeric" data-number placeholder="Kwota zaliczki">
                   <small class="error-text"></small>
                 </label>
                 <div>Udział w cenie całkowitej: <output id="preliminaryAdvanceMixedPercent">0%</output></div>
                 <label>
                   <span>Kwota dla zadatku</span>
-                  <input type="text" name="preliminaryEarnestMixedAmount" value="30,000" inputmode="numeric" data-number placeholder="Kwota zadatku">
+                  <input type="text" name="preliminaryEarnestMixedAmount" inputmode="numeric" data-number placeholder="Kwota zadatku">
                   <small class="error-text"></small>
                 </label>
                 <div>Udział w cenie całkowitej: <output id="preliminaryEarnestMixedPercent">0%</output></div>
@@ -856,13 +856,13 @@
               <legend>Finansowanie kredytem</legend>
               <label>
                 <span>Kwota finansowania kredytem</span>
-                <input type="text" name="creditAmount" value="500,000" inputmode="numeric" data-number placeholder="Kwota kredytu">
+                <input type="text" name="creditAmount" inputmode="numeric" data-number placeholder="Kwota kredytu">
                 <small class="error-text"></small>
               </label>
               <div>Udział w cenie całkowitej: <output id="creditAmountPercent">0%</output></div>
               <label>
                 <span>Kwota środków własnych</span>
-                <input type="text" name="ownFundsAmount" value="225,000" inputmode="numeric" data-number placeholder="Kwota środków własnych">
+                <input type="text" name="ownFundsAmount" inputmode="numeric" data-number placeholder="Kwota środków własnych">
                 <small class="error-text"></small>
               </label>
               <div>Udział w cenie całkowitej: <output id="ownFundsPercent">0%</output></div>
@@ -892,7 +892,7 @@
           <div class="conditional" data-show-when="finalFinanceMode:w transzach">
             <label>
               <span>Liczba transz końcowych</span>
-              <input type="text" name="finalInstallmentsCount" value="2" inputmode="numeric" data-number placeholder="Liczba transz">
+              <input type="text" name="finalInstallmentsCount" inputmode="numeric" data-number placeholder="Liczba transz">
               <small class="error-text"></small>
             </label>
             <div id="finalInstallmentsDetails"></div>
@@ -905,17 +905,17 @@
             <legend>Najważniejsze ustalenia</legend>
             <label>
               <span>Data zawarcia</span>
-              <input type="date" name="reservationContractDate" value="2026-04-24">
+              <input type="date" name="reservationContractDate">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Okres rezerwacji od</span>
-              <input type="date" name="reservationFrom" value="2026-04-25">
+              <input type="date" name="reservationFrom">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Okres rezerwacji do</span>
-              <input type="date" name="reservationTo" value="2026-05-10">
+              <input type="date" name="reservationTo">
               <small class="error-text"></small>
             </label>
             <label>
@@ -935,17 +935,17 @@
             <legend>Najważniejsze ustalenia</legend>
             <label>
               <span>Data zawarcia</span>
-              <input type="date" name="preliminaryDate" value="2026-04-24">
+              <input type="date" name="preliminaryDate">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Termin umowy przyrzeczonej</span>
-              <input type="date" name="promisedDate" value="2026-06-30">
+              <input type="date" name="promisedDate">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Łączna kwota przedpłaty</span>
-              <input type="text" name="prepaymentTotal" value="50,000" inputmode="numeric" data-number>
+              <input type="text" name="prepaymentTotal" inputmode="numeric" data-number>
               <small class="error-text"></small>
             </label>
             <div id="prepaymentValidationMessage" aria-live="polite"></div>
@@ -1028,18 +1028,18 @@
             <legend>Najważniejsze ustalenia</legend>
             <label>
               <span>Data aktu</span>
-              <input type="date" name="finalActDate" value="2026-07-10">
+              <input type="date" name="finalActDate">
               <small class="error-text"></small>
             </label>
             <label>
               <span>Cena ostateczna</span>
-              <input type="text" name="finalPrice" value="725,000" inputmode="numeric" data-number>
+              <input type="text" name="finalPrice" inputmode="numeric" data-number>
               <small class="error-text"></small>
             </label>
             <div id="alreadyPaidBlock">
               <label>
                 <span>Kwota już zapłacona wcześniej</span>
-                <input type="text" name="alreadyPaid" value="50,000" inputmode="numeric" data-number>
+                <input type="text" name="alreadyPaid" inputmode="numeric" data-number>
                 <small class="error-text"></small>
               </label>
               <label>
@@ -1055,7 +1055,7 @@
             </div>
             <label>
               <span>Pozostała kwota do zapłaty</span>
-              <input type="text" name="remainingAmount" value="675,000" inputmode="numeric" data-number>
+              <input type="text" name="remainingAmount" inputmode="numeric" data-number>
               <small class="error-text"></small>
             </label>
             <label>
